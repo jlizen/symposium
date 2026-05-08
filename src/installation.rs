@@ -323,7 +323,7 @@ async fn acquire_cargo(
         .as_ref()
         .map(|n| cache_dir.join("bin").join(platform_binary_exe(n)));
 
-    let already = probe_path.as_ref().map_or(false, |p| p.exists());
+    let already = probe_path.as_ref().is_some_and(|p| p.exists());
     if !already {
         install_cargo_crate(
             &cargo.crate_name,

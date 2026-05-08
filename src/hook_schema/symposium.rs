@@ -95,7 +95,7 @@ impl InputEvent {
             InputEvent::UserPromptSubmit(_) | InputEvent::SessionStart(_) => return true,
         };
 
-        Regex::new(matcher).map_or(false, |re| re.is_match(tool_name))
+        Regex::new(matcher).is_ok_and(|re| re.is_match(tool_name))
     }
 }
 

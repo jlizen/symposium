@@ -27,10 +27,7 @@ impl Predicate {
         match self {
             Predicate::Wildcard => true,
             Predicate::Crate(name, version_req) => deps.iter().any(|(dep_name, dep_ver)| {
-                dep_name == name
-                    && version_req
-                        .as_ref()
-                        .map_or(true, |req| req.matches(dep_ver))
+                dep_name == name && version_req.as_ref().is_none_or(|req| req.matches(dep_ver))
             }),
         }
     }

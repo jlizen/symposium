@@ -483,7 +483,7 @@ fn ensure_claude_hook_entry(
         group
             .get("hooks")
             .and_then(|h| h.as_array())
-            .map_or(false, |hooks| {
+            .is_some_and(|hooks| {
                 hooks.iter().any(|h| {
                     h.get("command")
                         .and_then(|c| c.as_str())
@@ -563,7 +563,7 @@ fn ensure_codex_hook_entry(
         group
             .get("hooks")
             .and_then(|h| h.as_array())
-            .map_or(false, |hooks| {
+            .is_some_and(|hooks| {
                 hooks.iter().any(|h| {
                     h.get("command")
                         .and_then(|c| c.as_str())
@@ -610,7 +610,7 @@ fn register_copilot_hooks_global(config_path: &Path, out: &Output) -> Result<()>
 
     // Check if already registered
     let already = hooks_obj.values().any(|arr| {
-        arr.as_array().map_or(false, |a| {
+        arr.as_array().is_some_and(|a| {
             a.iter().any(|h| {
                 h.get("bash")
                     .and_then(|c| c.as_str())
@@ -763,7 +763,7 @@ fn ensure_gemini_hook_entry(
         group
             .get("hooks")
             .and_then(|h| h.as_array())
-            .map_or(false, |hooks| {
+            .is_some_and(|hooks| {
                 hooks.iter().any(|h| {
                     h.get("command")
                         .and_then(|c| c.as_str())
@@ -956,7 +956,7 @@ fn unregister_settings_hooks(settings_path: &Path, command_prefix: &str, out: &O
                 !group
                     .get("hooks")
                     .and_then(|h| h.as_array())
-                    .map_or(false, |hooks| {
+                    .is_some_and(|hooks| {
                         hooks.iter().any(|h| {
                             h.get("command")
                                 .and_then(|c| c.as_str())
